@@ -1,17 +1,8 @@
 package com.tylerholcombe.leagueit.user.rest;
 
-public class UserModel {
-    private Long id;
+public class UserDto {
     private String username;
     private String password;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;

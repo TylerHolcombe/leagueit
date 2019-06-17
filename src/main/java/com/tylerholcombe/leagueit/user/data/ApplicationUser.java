@@ -1,11 +1,9 @@
 package com.tylerholcombe.leagueit.user.data;
 
-import com.tylerholcombe.leagueit.user.rest.UserModel;
-
 import javax.persistence.*;
 
 @Entity
-public class User {
+public class ApplicationUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,15 +11,9 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
     private String password;
-    private String accessToken;
-    private String refreshToken;
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public ApplicationUser() {
     }
-
-    public User() {}
 
     public Long getId() {
         return id;
@@ -45,21 +37,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public String getRefreshToken() {
-        return refreshToken;
-    }
-
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
     }
 }
