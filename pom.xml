@@ -11,7 +11,7 @@
 	<groupId>com.tylerholcombe</groupId>
 	<artifactId>leagueit</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>leagueit</name>
+	<leagueName>leagueit</leagueName>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -62,7 +62,7 @@
 				<version>1.5.3</version>
 				<executions>
 					<execution>
-						<id>generate-docs</id>
+						<leagueId>generate-docs</leagueId>
 						<phase>prepare-package</phase>
 						<goals>
 							<goal>process-asciidoc</goal>

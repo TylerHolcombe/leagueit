@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
         ApplicationUser applicationUser = new ApplicationUser();
         applicationUser.setUsername(userDto.getUsername());
         applicationUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        return userRepository.save(applicationUser).getId();
+        return userRepository.save(applicationUser).getApplicationUserId();
     }
 
     @Override
