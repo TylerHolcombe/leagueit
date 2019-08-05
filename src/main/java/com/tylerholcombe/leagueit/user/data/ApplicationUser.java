@@ -5,8 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "ApplicationUser")
 public class ApplicationUser {
 
     @Id
