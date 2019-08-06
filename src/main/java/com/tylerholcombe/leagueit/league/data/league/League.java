@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import java.util.Set;
 
 @Entity
-@Table(name = "League")
 public class League {
 
     @Id
