@@ -7,16 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
 public class GameResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long gameResultId;
-    private Integer ratingBefore;
+    private Double ratingBefore;
     private Boolean isWinner;
-    private Integer ratingAfter;
+    private Double ratingAfter;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id", nullable = false)
     private Game game;
@@ -32,11 +31,11 @@ public class GameResult {
         this.gameResultId = gameResultId;
     }
 
-    public Integer getRatingBefore() {
+    public Double getRatingBefore() {
         return ratingBefore;
     }
 
-    public void setRatingBefore(Integer ratingBefore) {
+    public void setRatingBefore(Double ratingBefore) {
         this.ratingBefore = ratingBefore;
     }
 
@@ -48,11 +47,11 @@ public class GameResult {
         isWinner = winner;
     }
 
-    public Integer getRatingAfter() {
+    public Double getRatingAfter() {
         return ratingAfter;
     }
 
-    public void setRatingAfter(Integer ratingAfter) {
+    public void setRatingAfter(Double ratingAfter) {
         this.ratingAfter = ratingAfter;
     }
 

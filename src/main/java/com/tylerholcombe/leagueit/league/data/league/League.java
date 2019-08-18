@@ -2,13 +2,17 @@ package com.tylerholcombe.leagueit.league.data.league;
 
 import com.tylerholcombe.leagueit.league.data.Game;
 import com.tylerholcombe.leagueit.league.data.Player;
+import com.tylerholcombe.leagueit.league.data.league.rating.RatingStrategy;
+import com.tylerholcombe.leagueit.user.data.ApplicationUser;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import java.util.Set;
 
 @Entity
@@ -20,6 +24,9 @@ public class League {
     private String leagueName;
     private Integer teamSize;
     private RatingStrategy ratingStrategy;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", nullable = false)
+    private ApplicationUser owner;
     @OneToMany(mappedBy = "league")
     private Set<Game> games;
     @OneToMany(mappedBy = "league")
@@ -55,6 +62,14 @@ public class League {
 
     public void setRatingStrategy(RatingStrategy ratingStrategy) {
         this.ratingStrategy = ratingStrategy;
+    }
+
+    public ApplicationUser getOwner() {
+        return owner;
+    }
+
+    public void setOwner(ApplicationUser owner) {
+        this.owner = owner;
     }
 
     public Set<Game> getGames() {

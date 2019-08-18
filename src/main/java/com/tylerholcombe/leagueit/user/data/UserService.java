@@ -32,7 +32,14 @@ public class UserService implements UserDetailsService {
         if (applicationUser == null) {
             throw new UsernameNotFoundException(username);
         }
-
         return new User(applicationUser.getUsername(), applicationUser.getPassword(), emptyList());
+    }
+
+    public ApplicationUser loadApplicationUserByUsername(String username) {
+        ApplicationUser applicationUser = userRepository.findByUsername(username);
+        if (applicationUser == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return applicationUser;
     }
 }
