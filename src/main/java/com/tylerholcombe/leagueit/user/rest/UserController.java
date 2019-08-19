@@ -16,8 +16,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public Long addNewUser(@RequestBody UserDto request) {
-        //TODO: validate request info
-        //TODO: validate unique username (throw better exception)
+        //TODO: validate unique username (throw better exception) -- catch/rethrow DB exception
         return userService.createUser(request);
     }
 }

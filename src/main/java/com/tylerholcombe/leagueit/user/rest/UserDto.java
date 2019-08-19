@@ -1,8 +1,17 @@
 package com.tylerholcombe.leagueit.user.rest;
 
 public class UserDto {
+    private Long userId;
     private String username;
     private String password;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public String getUsername() {
         return username;

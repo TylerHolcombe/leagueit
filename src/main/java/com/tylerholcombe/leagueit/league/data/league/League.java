@@ -3,15 +3,12 @@ package com.tylerholcombe.leagueit.league.data.league;
 import com.tylerholcombe.leagueit.league.data.Game;
 import com.tylerholcombe.leagueit.league.data.Player;
 import com.tylerholcombe.leagueit.league.data.league.rating.RatingStrategy;
-import com.tylerholcombe.leagueit.user.data.ApplicationUser;
+import com.tylerholcombe.leagueit.league.rest.LeagueDto;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
@@ -24,13 +21,22 @@ public class League {
     private String leagueName;
     private Integer teamSize;
     private RatingStrategy ratingStrategy;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", nullable = false)
-    private ApplicationUser owner;
+    private Long ownerId;
     @OneToMany(mappedBy = "league")
     private Set<Game> games;
     @OneToMany(mappedBy = "league")
     private Set<Player> players;
+
+    public League() {
+    }
+
+    public League(LeagueDto leagueDto) {
+        this.leagueId = leagueDto.getLeagueId();
+        this.leagueName = leagueDto.getLeagueName();
+        this.teamSize = leagueDto.getTeamSize();
+        this.ratingStrategy = leagueDto.getRatingStrategy();
+        this.ownerId = leagueDto.getOwnerId();
+    }
 
     public Long getLeagueId() {
         return leagueId;
@@ -64,12 +70,12 @@ public class League {
         this.ratingStrategy = ratingStrategy;
     }
 
-    public ApplicationUser getOwner() {
-        return owner;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwner(ApplicationUser owner) {
-        this.owner = owner;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public Set<Game> getGames() {

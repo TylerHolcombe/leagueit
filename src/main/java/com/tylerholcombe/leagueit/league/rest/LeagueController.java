@@ -1,7 +1,5 @@
 package com.tylerholcombe.leagueit.league.rest;
 
-import com.tylerholcombe.leagueit.league.data.Player;
-import com.tylerholcombe.leagueit.league.data.league.League;
 import com.tylerholcombe.leagueit.league.data.league.LeagueService;
 import com.tylerholcombe.leagueit.user.data.ApplicationUser;
 import com.tylerholcombe.leagueit.user.data.UserService;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/leagues")
 public class LeagueController {
@@ -30,28 +26,24 @@ public class LeagueController {
     UserService userService;
 
     @PostMapping
-    public League createLeague(Authentication authentication, @RequestBody League league) {
-        //TODO: Validate league info
-        //TODO: Validate league owner matches userId
-        league.setOwner(getActiveUser(authentication));
+    public LeagueDto createLeague(Authentication authentication, @RequestBody LeagueDto league) {
+        ApplicationUser owner = getActiveUser(authentication);
+        league.setOwnerId(owner.getApplicationUserId());
+        league.setOwnerUsername(owner.getUsername());
         return leagueService.createLeague(league);
     }
 
     @GetMapping("/{leagueId}")
-    public League getLeague(@PathVariable("leagueId") Long leagueId) {
-        //TODO: Validate request has access to league
-        Optional<League> response = leagueService.findLeagueById(leagueId);
-        if (!response.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return response.get();
+    public LeagueDto getLeague(Authentication authentication, @PathVariable("leagueId") Long leagueId) {
+        ApplicationUser user = getActiveUser(authentication);
+        return leagueService.findLeagueById(leagueId, user.getApplicationUserId());
     }
 
-    @PutMapping("/{leagueId}/players/{userId}")
-    public Player createPlayer(@PathVariable("leagueId") Long leagueId, @PathVariable Long userId) {
-        //TODO: Validate request has access to league
-        //TODO: Validate the User is unique within the League
-        return leagueService.createPlayer(leagueId, userId);
+    @PutMapping("/{leagueId}/players/{playerId}")
+    public PlayerDto createPlayer(Authentication authentication, @PathVariable("leagueId") Long leagueId, @PathVariable("playerId") Long playerId) {
+        ApplicationUser user = getActiveUser(authentication);
+        //TODO: Validate the User is unique within the League -- catch/rethrow exception from DB
+        return leagueService.createPlayer(leagueId, playerId, user.getApplicationUserId());
     }
 
     private ApplicationUser getActiveUser(Authentication authentication) {
