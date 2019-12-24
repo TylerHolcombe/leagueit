@@ -15,6 +15,7 @@ CREATE TABLE league (
     team_size INT NOT NULL,
     rating_strategy INT NOT NULL,
     PRIMARY KEY (league_id),
+    FOREIGN KEY (owner_id) REFERENCES application_user(application_user_id),
     UNIQUE KEY unique_league_name (owner_id, league_name)
 );
 
@@ -52,4 +53,27 @@ CREATE TABLE game_result (
     FOREIGN KEY (player_id) REFERENCES player(player_id),
     FOREIGN KEY (game_id) REFERENCES game(game_id),
     UNIQUE KEY unique_game_player (player_id, game_id)
+);
+
+CREATE TABLE season (
+	season_id BIGINT AUTO_INCREMENT NOT NULL UNIQUE,
+    league_id BIGINT NOT NULL,
+    season_name VARCHAR(255) NOT NULL,
+    is_active BOOL NOT NULL DEFAULT FALSE,
+    PRIMARY KEY (season_id),
+    FOREIGN KEY (league_id) REFERENCES league(league_id)
+);
+
+CREATE TABLE season_player (
+	season_player_id BIGINT AUTO_INCREMENT NOT NULL UNIQUE,
+    season_id BIGINT NOT NULL,
+    player_id BIGINT NOT NULL,
+    wins INT NOT NULL DEFAULT 0,
+    losses INT NOT NULL DEFAULT 0,
+    ties INT NOT NULL DEFAULT 0,
+    rating DOUBLE NOT NULL DEFAULT 0,
+    PRIMARY KEY (season_player_id),
+    FOREIGN KEY (season_id) REFERENCES season(season_id),
+    FOREIGN KEY (player_id) REFERENCES player(player_id),
+    UNIQUE KEY unique_season_player (season_id, player_id)
 );

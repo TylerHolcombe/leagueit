@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -67,10 +68,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+        String username = ((User) authResult.getPrincipal()).getUsername();
+        Date expiration = new Date(System.currentTimeMillis() + expirationTime);
         String token = JWT.create()
-                .withSubject(((User) authResult.getPrincipal()).getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
+                .withSubject(username)
+                .withExpiresAt(expiration)
                 .sign(Algorithm.HMAC512(secret));
         response.addHeader(header, prefix + token);
+        try (PrintWriter writer = response.getWriter()) {
+            writer.write("{\"username\":\"" + username + "\", \"expiration\":\"" + expiration.toString() + "\", \"token\":\"" + prefix + token + "\"}");
+            writer.flush();
+        }
     }
 }
