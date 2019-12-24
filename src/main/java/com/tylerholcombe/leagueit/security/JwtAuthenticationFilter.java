@@ -76,7 +76,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sign(Algorithm.HMAC512(secret));
         response.addHeader(header, prefix + token);
         try (PrintWriter writer = response.getWriter()) {
-            writer.write("{\"username\":\"" + username + "\", \"expiration\":\"" + expiration.toString() + "\", \"token\":\"" + prefix + token + "\"}");
+            writer.write("{\"username\":\"" + username + "\", \"expiration\":\"" + expiration + "\", \"token\":\"" + prefix + token + "\"}");
             writer.flush();
         }
     }
