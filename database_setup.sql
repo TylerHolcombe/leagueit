@@ -12,6 +12,7 @@ CREATE TABLE league (
     league_id BIGINT AUTO_INCREMENT NOT NULL UNIQUE,
     owner_id BIGINT NOT NULL,
     league_name VARCHAR(255) NOT NULL,
+    league_description VARCHAR(255),
     team_size INT NOT NULL,
     rating_strategy INT NOT NULL,
     PRIMARY KEY (league_id),

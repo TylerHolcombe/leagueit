@@ -27,6 +27,8 @@ public class Player {
     @JoinColumn(name = "league_id", nullable = false)
     private League league;
 
+    public Player() {}
+
     public Long getPlayerId() {
         return playerId;
     }

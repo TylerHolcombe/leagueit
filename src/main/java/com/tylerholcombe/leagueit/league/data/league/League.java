@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,6 +20,7 @@ public class League {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long leagueId;
     private String leagueName;
+    private String leagueDescription;
     private Integer teamSize;
     private RatingStrategy ratingStrategy;
     private Long ownerId;
@@ -54,6 +56,14 @@ public class League {
         this.leagueName = leagueName;
     }
 
+    public String getLeagueDescription() {
+        return leagueDescription;
+    }
+
+    public void setLeagueDescription(String leagueDescription) {
+        this.leagueDescription = leagueDescription;
+    }
+
     public Integer getTeamSize() {
         return teamSize;
     }
@@ -87,6 +97,9 @@ public class League {
     }
 
     public Set<Player> getPlayers() {
+        if (players == null) {
+            players = new HashSet<>();
+        }
         return players;
     }
 

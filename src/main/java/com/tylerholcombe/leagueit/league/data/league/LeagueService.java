@@ -11,7 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class LeagueService {
@@ -29,6 +32,8 @@ public class LeagueService {
         League league = new League(leagueDto);
         league = leagueRepository.save(league);
 
+        createPlayer(league.getLeagueId(), league.getOwnerId(), league.getOwnerId());
+
         return new LeagueDto(league);
     }
 
@@ -42,6 +47,15 @@ public class LeagueService {
         }
 
         return new LeagueDto(response.get());
+    }
+
+    public List<LeagueDto> findLeaguesByPlayerUsername(String playerUsername) {
+        List<League> response = leagueRepository.findByPlayers_User_Username(playerUsername);
+        if (response.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No leagues found containing that player");
+        }
+
+        return response.stream().map(LeagueDto::new).collect(Collectors.toList());
     }
 
     public PlayerDto createPlayer(Long leagueId, Long playerId, Long userId) {
