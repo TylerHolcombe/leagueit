@@ -10,17 +10,17 @@ public class GroupElo implements RatingStrategyInterface {
 
     @Override
     public Map.Entry<List<Double>, List<Double>> calculateNewRating(List<Double> winnerStartingRating, List<Double> loserStartingRating) {
-        double averateWinnerElo = winnerStartingRating.stream().mapToDouble(value -> value.doubleValue()).average().getAsDouble();
-        double averateLoserElo = loserStartingRating.stream().mapToDouble(value -> value.doubleValue()).average().getAsDouble();
+        double averageWinnerElo = winnerStartingRating.stream().mapToDouble(value -> value.doubleValue()).average().getAsDouble();
+        double averageLoserElo = loserStartingRating.stream().mapToDouble(value -> value.doubleValue()).average().getAsDouble();
 
         List<Double> updatedWinnerElos = new ArrayList<>();
         for (Double winner : winnerStartingRating) {
-            Double updatedWinnerElo = winner + calculateEloDifference(winner, averateLoserElo, true);
+            Double updatedWinnerElo = winner + calculateEloDifference(winner, averageLoserElo, true);
             updatedWinnerElos.add(updatedWinnerElo);
         }
         List<Double> updatedLoserElos = new ArrayList<>();
         for (Double loser : loserStartingRating) {
-            Double updatedLoserElo = loser + calculateEloDifference(loser, averateWinnerElo, true);
+            Double updatedLoserElo = loser + calculateEloDifference(loser, averageWinnerElo, true);
             updatedLoserElos.add(updatedLoserElo);
         }
 

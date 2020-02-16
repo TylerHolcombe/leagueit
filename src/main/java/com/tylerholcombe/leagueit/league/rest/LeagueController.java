@@ -27,6 +27,7 @@ public class LeagueController {
 
     @PostMapping
     public LeagueDto createLeague(Authentication authentication, @RequestBody LeagueDto league) {
+        // TODO: handle unique name constraint violation
         ApplicationUser owner = getActiveUser(authentication);
         league.setOwnerId(owner.getApplicationUserId());
         league.setOwnerUsername(owner.getUsername());
